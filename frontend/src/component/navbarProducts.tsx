@@ -9,6 +9,7 @@ import {GetMemberById,GetSellerByMemberId} from '../services/http/index'
 import { UserOutlined } from '@ant-design/icons';
 import ShopRating from "../pages/Review/ReviewSeller/ShopRating";
 import { SellerInterface } from "../../src/interfaces/Seller";
+import SongThor from "../component/LogoText";
 
 const Navbarproductsber = () => {
     const [uid , setUid] = useState<number | null>(Number(localStorage.getItem("id")))
@@ -140,7 +141,7 @@ const Navbarproductsber = () => {
                     <div className="header-menuproducts">
                         <div className="titleproducts">
                             <img src={Logo} className="navproductslogo" alt="logo" />
-                            SongThor <span>SUT</span> </div>
+                            <SongThor/> <h1> SUT</h1> </div>
                         <div className="sidebar-btnproducts" onClick={toggleSidebar}>
                             <i className="fa-solid fa-bars"></i>
                         </div>

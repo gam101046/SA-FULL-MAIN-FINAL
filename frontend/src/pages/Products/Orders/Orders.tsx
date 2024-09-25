@@ -202,7 +202,7 @@ const Index: React.FC = () => {
   ];
 
   return (
-    <div className="order">
+    <div className="orderbymember">
       {contextHolder}
       <NavbarMember/>
       <h2>รายการคำสั่งซื้อ</h2>

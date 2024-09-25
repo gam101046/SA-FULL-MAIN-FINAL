@@ -182,8 +182,10 @@ body{
   font-weight: 900;
 }
 
-.wrapperseller .headerseller .header-menuseller .titleseller span{
+.wrapperseller .headerseller .header-menuseller .titleseller h1{
   color: #ff5733;
+  font-size: 25px;
+  margin-left: 10px;
 }
 
 .wrapperseller .headerseller .header-menuseller .sidebar-btnseller{

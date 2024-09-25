@@ -56,8 +56,10 @@ body{
   font-weight: 900;
 }
 
-.wrappermem .headermem .header-menumem .titlemem span{
+.wrappermem .headermem .header-menumem .titlemem h1{
   color: #ff5733;
+  font-size: 25px;
+  margin-left: 10px;
 }
 
 .wrappermem .headermem .header-menumem .sidebar-btnmem{

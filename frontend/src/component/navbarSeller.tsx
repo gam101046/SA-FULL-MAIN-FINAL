@@ -7,6 +7,7 @@ import { message, Avatar } from "antd";
 import { MemberInterface } from '../interfaces/Member';
 import {GetMemberById} from '../services/http/index'
 import { UserOutlined } from '@ant-design/icons';
+import SongThor from "../component/LogoText";
 
 const NavbarSeller = () => {
     const [uid , setUid] = useState<number | null>(Number(localStorage.getItem("id")))
@@ -76,7 +77,7 @@ const NavbarSeller = () => {
       };
 
     const handleToMyReview = () => {
-      navigate('/Review'); // Navigate to ApplyToSeller page
+      navigate('/ProductSeller'); // Navigate to ApplyToSeller page
       };
 
     const handleToChatBuyer = () => {
@@ -127,7 +128,7 @@ const NavbarSeller = () => {
                     <div className="header-menuseller">
                         <div className="titleseller">
                             <img src={Logo} className="navsellerlogo" alt="logo" />
-                            SongThor <span>SUT</span> </div>
+                            <SongThor/> <h1> SUT</h1> </div>
                         <div className="sidebar-btnseller" onClick={toggleSidebar}>
                             <i className="fa-solid fa-bars"></i>
                         </div>

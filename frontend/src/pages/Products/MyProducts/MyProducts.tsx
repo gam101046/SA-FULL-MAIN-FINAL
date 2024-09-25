@@ -1,11 +1,11 @@
-import { Button, Card, message } from "antd";
+import { Card, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GetProductsBySellerId, GetSellerByMemberId } from "../../../services/http/index";
-import "./MyProducts.css";
-import { SellerInterface } from "../../../interfaces/Seller";
-import ShopRating from "../../Review/ReviewSeller/ShopRating";
 import Navbarproducts from "../../../component/navbarproducts";
+import { SellerInterface } from "../../../interfaces/Seller";
+import { GetProductsBySellerId, GetSellerByMemberId } from "../../../services/http/index";
+import ShopRating from "../../Review/ReviewSeller/ShopRating";
+import "./MyProducts.css";
 
 const { Meta } = Card;
 
@@ -22,78 +22,60 @@ interface Products {
 const Index: React.FC = () => {
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
-
-  // Seller state
   const [seller, setSeller] = useState<SellerInterface | null>(null);
   const [sellerId, setSellerId] = useState<number | null>(null);
   const [products, setProducts] = useState<Products[]>([]);
-  const [isShopRatingVisible, setIsShopRatingVisible] = useState(false); 
+  const [isShopRatingVisible, setIsShopRatingVisible] = useState(false);
 
 
-  // Fetch products by seller ID
+
   const fetchProductsBySellerId = async (sellerId: number) => {
-    const res = await GetProductsBySellerId(sellerId, 1, 10); // Assuming page 1 and 10 products per page
+    const res = await GetProductsBySellerId(sellerId, 1, 10);
     if (res) {
       const availableProducts = res.products.filter((product: Products) => product.Status === 'Available');
-      setProducts(availableProducts); // Set only available products
+      setProducts(availableProducts);
     } else {
       messageApi.error("Error fetching products for seller");
     }
   };
 
 
-  // Function to fetch seller by member_id
+
   const fetchSeller = async (member_id: number) => {
-    const res = await GetSellerByMemberId(member_id); // Call the function
+    const res = await GetSellerByMemberId(member_id);
     if (!res.error) {
-      setSeller(res.seller); // Set the seller object
-      setSellerId(res.seller_id); // Set the seller ID
-      fetchProductsBySellerId(res.seller_id); // Fetch products for this seller
+      setSeller(res.seller);
+      setSellerId(res.seller_id);
+      fetchProductsBySellerId(res.seller_id);
     } else {
       message.error(res.error);
     }
     console.log("Form values:", res);
   };
 
-  // Fetch the seller when the component mounts or the member_id changes
+
   useEffect(() => {
-    const memberId = Number(localStorage.getItem("id")); // Assuming member_id is stored in localStorage
+    const memberId = Number(localStorage.getItem("id"));
     if (memberId) {
-      fetchSeller(memberId); // Fetch seller using the member ID
+      fetchSeller(memberId);
     }
   }, []);
 
-  const goToProductPage = () => {
-    navigate('/HomeSeller');
-  };
-
-  const goToReviwe = () => {
-    navigate('/ReviewSeller');
-  };
-
   const handleToEditProduct = (id: number) => {
-    // When clicking on a product, navigate to /EditProducts with the product ID
+    
     navigate(`/EditProducts/${id}`);
   };
 
-  const handleCreateProduct = () => {
-    navigate('/createproducts'); // Navigate to ApplyToSeller page
-  };
-  const handleShopRating = () => {
-    setIsShopRatingVisible(true); // Open the modal
-  };
   const closeShopRating = () => {
-    setIsShopRatingVisible(false); // Close the modal
+    setIsShopRatingVisible(false);
   };
 
 
   return (
-    <div className="myproducts">
+    <div className="myproductSeller">
       {contextHolder}
       <h1>My Products</h1>
-
       <Navbarproducts/>
-
       <div className="product-list">
       {products.length > 0 ? (
             products.map(product => (
@@ -105,10 +87,10 @@ const Index: React.FC = () => {
                   <img
                     alt={product.Title}
                     src={product.PictureProduct || 'https://via.placeholder.com/240'}
-                    style={{ width: '100%', height: '210px', objectFit: 'cover' }} // ปรับขนาดรูปภาพ
+                    style={{ width: '100%', height: '210px', objectFit: 'cover' }}
                   />
                 }
-                onClick={() => handleToEditProduct(product.ID)} // Navigate to product edit page
+                onClick={() => handleToEditProduct(product.ID)}
               >
                 <Meta title={product.Title} description={`ราคา: ${product.Price} บาท`} />
               </Card>
@@ -118,7 +100,7 @@ const Index: React.FC = () => {
           )}
       </div>
       <ShopRating
-        sellerID={sellerId} // You can replace this with the actual seller ID
+        sellerID={sellerId}
         visible={isShopRatingVisible}
         onClose={closeShopRating}
       />

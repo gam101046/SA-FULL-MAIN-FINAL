@@ -55,8 +55,11 @@
     font-weight: 900;
   }
   
-  .wrapperproducts .headerproducts .header-menuproducts .titleproducts span{
+  .wrapperproducts .headerproducts .header-menuproducts .titleproducts h1{
     color: #ff5733;
+    font-size: 25px;
+    margin-left: 10px;
+    
   }
   
   .wrapperproducts .headerproducts .header-menuproducts .sidebar-btnproducts{

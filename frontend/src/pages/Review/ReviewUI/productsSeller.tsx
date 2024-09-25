@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import StarRating from '../star/starrating';
 import { ProductsInterface } from '../../../interfaces/Products';
 import { Review } from '../../../interfaces/review';
-import Re_bar from "../../../component/re_bar";
+import Re_bar_seller from "../../../component/re_bar_seller";
 import NavbarSeller from '../../../component/navbarSeller';
 
 const ProductSeller: React.FC = () => {
@@ -77,7 +77,7 @@ const ProductSeller: React.FC = () => {
   return (
     <div>
       <NavbarSeller />
-      <Re_bar />
+      <Re_bar_seller />
       <div style={{width:"173.1vh"}}>
         <Table
           dataSource={products}

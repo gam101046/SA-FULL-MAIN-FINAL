@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-.order {
+.orderbymember {
     width: 100vw;
     height: 100vh;
     background-color: rgb(255, 255, 255);
@@ -9,7 +9,7 @@
     z-index: 0;
 }
 
-.order h2 {
+.orderbymember h2 {
   position: absolute;
   color: rgb(0, 0, 0);
   font-size: 30px;

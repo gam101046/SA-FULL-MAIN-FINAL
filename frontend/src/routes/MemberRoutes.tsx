@@ -20,6 +20,7 @@ import SellerBuyProducts from "../pages/Products/Buy-Products/SellerBuyProducts"
 import OrderBySeller from "../pages/Products/Orders/OrderBySeller"
 import ChatBuyerBySeller from "../pages/Chat/MemberChat/CaatBuyerBySeller"
 import ProductSeller from "../pages/Review/ReviewUI/productsSeller";
+import ReviewPageSeller from "../pages/Review/ReviewUI/ReviewPageSeller"
 
 
 const MainPages = Loadable(lazy(() => import("../../src/pages/Home/home")));
@@ -118,6 +119,10 @@ const MemberRoutes = (isLoggedIn: boolean): RouteObject[] => {
     {
       path: "/ChatBuyerBySeller",
       element: <ChatBuyerBySeller />,
+    },
+    {
+      path: "/ReviewPageSeller",
+      element: <ReviewPageSeller />,
     },
     {
       path: "/EditProducts/:id",
