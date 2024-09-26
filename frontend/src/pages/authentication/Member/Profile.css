@@ -1,7 +1,10 @@
 .body{
-  width: 175vh;
-  height: 104.7vh;
-  background: #2e2f33;
+  width: 100vw; /* ใช้ความกว้างและความสูงเต็มหน้าจอ */
+  height: 100vh;
+  background-color: #2e2f33;
+  display: flex; /* ใช้ Flexbox */
+  justify-content: center; /* จัดแนวนอนให้อยู่ตรงกลาง */
+  align-items: center; /* จัดแนวตั้งให้อยู่ตรงกลาง */
 }
 
 .card-profile{
@@ -21,6 +24,7 @@
 .profile{
   font-family: "Roboto", sans-serif;
   margin-top: -13vh;
+  
 }
   
 .images-logo-profile {

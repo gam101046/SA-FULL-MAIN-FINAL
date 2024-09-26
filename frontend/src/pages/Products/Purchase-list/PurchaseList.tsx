@@ -2,10 +2,8 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Modal, Table, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { DeleteOrder, GetOrdersByProductIDAndSellerID, GetProductsBySellerId, GetMemberById, GetSellerByMemberId } from "../../../services/http/index";
 import "./PurchaseList.css";
-import Logo from "/Users/gam/Desktop/SA-FULL/Project-SA-G15-FULL-main/frontend/src/assets/logo.png";
 import { SellerInterface } from "../../../interfaces/Seller";
 import Navbarproducts from "../../../component/navbarProducts.tsx";
 interface Product{
@@ -20,7 +18,6 @@ interface Product{
   LastName?: string;
   PhoneNumber?: string;
 }
-
 interface Order {
   ID: number;
   Quantity: number;
@@ -35,10 +32,7 @@ interface MemberByOrder {
   PhoneNumber?: string;
 }
 
-
-
 const Index: React.FC = () => {
-  const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [seller, setSeller] = useState<SellerInterface | null>(null);
   const [messageApi, contextHolder] = message.useMessage();
@@ -48,18 +42,16 @@ const Index: React.FC = () => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState<string>();
   const [deleteId, setDeleteId] = useState<number | undefined>();
-
   const fetchSellerData = async () => {
     try {
       const sellerData = await GetSellerByMemberId(MemberID);
-      console.log("Seller data from API: ", sellerData); // ตรวจสอบข้อมูลที่ได้จาก API
+      console.log("Seller data from API: ", sellerData);
       setSeller(sellerData.seller);
-      setSellerId(sellerData.seller_id); // เก็บข้อมูล seller ใน state
+      setSellerId(sellerData.seller_id);
     } catch (error) {
       console.error("Error fetching seller data:", error);
     }
   };
-  
   const fetchProducts = async (page: number = 1, pageSize: number = 10) => {
     setProducts([]);
     if (!seller) return;
@@ -77,15 +69,15 @@ const Index: React.FC = () => {
                 uniqueProductOrderIds.add(order.ID);
                 const memberDatabyoeder: MemberByOrder | undefined = await GetMemberById(order.MemberID);
                 console.log("membr data " + memberDatabyoeder);
-                console.log("Member ID: ", order.MemberID); // ตรวจสอบ MemberID ที่เรียก
+                console.log("Member ID: ", order.MemberID);
                 console.log("Member Data: ", memberDatabyoeder);
                 updatedProducts.push({
                   ...product,
                   Price: order.Total_price,
                   OrderID: order.ID,
                   Quantity: order.Quantity,
-                  FirstName: memberDatabyoeder.data.FirstName, // เข้าถึง FirstName ผ่าน data
-                  LastName: memberDatabyoeder.data.LastName,   // เข้าถึง LastName ผ่าน data
+                  FirstName: memberDatabyoeder.data.FirstName,
+                  LastName: memberDatabyoeder.data.LastName,
                   PhoneNumber: memberDatabyoeder.data.PhoneNumber,
                 });console.log("Updated Products: ", updatedProducts);
               }
@@ -101,12 +93,12 @@ const Index: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchSellerData(); // ดึงข้อมูล seller ก่อน
+    fetchSellerData();
   }, []);
 
   useEffect(() => {
     if (seller) {
-      fetchProducts(); // ดึงข้อมูลสินค้าเมื่อได้ข้อมูล seller แล้ว
+      fetchProducts();
     }
   }, [seller]);
 
@@ -187,13 +179,9 @@ const Index: React.FC = () => {
       });
     }
   };
-
   const handleCancel = () => {
     setOpen(false);
   };
-
-
-
   return (
     <div className="card">
       {contextHolder}

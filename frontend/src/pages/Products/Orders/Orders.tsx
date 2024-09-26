@@ -3,14 +3,13 @@ import React, { useState, useEffect } from "react";
 import { Table, Button, Modal, message, Input } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
-import { useNavigate } from "react-router-dom";
 import {
   GetProductsByMemberId,
   GetOrdersByProductIDAndMemberID,
   DeleteOrder,
   UpProductsById,
 } from "../../../services/http/index";
-import StarRating from "../../Review/star/starrating"; // นำเข้า StarRating component
+import StarRating from "../../Review/star/starrating";
 import axios from 'axios';
 import NavbarMember from "../../../component/navbarMember.tsx";
 
@@ -34,12 +33,9 @@ interface Order {
 }
 
 const Index: React.FC = () => {
-  const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
   const MemberID = Number(localStorage.getItem("id"));
-  const [Title, setSearchTitle] = useState<string>(""); 
-  // Modal state
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState<string>();

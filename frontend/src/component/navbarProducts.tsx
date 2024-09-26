@@ -1,15 +1,15 @@
 
-import { useNavigate } from "react-router-dom";
-import Logo from "../assets/logonew.png";
-import "./navbarProducts.css";
-import { useState, useEffect} from "react";
-import { message, Avatar } from "antd";
-import { MemberInterface } from '../interfaces/Member';
-import {GetMemberById,GetSellerByMemberId} from '../services/http/index'
 import { UserOutlined } from '@ant-design/icons';
-import ShopRating from "../pages/Review/ReviewSeller/ShopRating";
+import { Avatar, message } from "antd";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { SellerInterface } from "../../src/interfaces/Seller";
+import Logo from "../assets/logonew.png";
 import SongThor from "../component/LogoText";
+import { MemberInterface } from '../interfaces/Member';
+import ShopRating from "../pages/Review/ReviewSeller/ShopRating";
+import { GetMemberById, GetSellerByMemberId } from '../services/http/index';
+import "./navbarProducts.css";
 
 const Navbarproductsber = () => {
     const [uid , setUid] = useState<number | null>(Number(localStorage.getItem("id")))
@@ -141,7 +141,7 @@ const Navbarproductsber = () => {
                     <div className="header-menuproducts">
                         <div className="titleproducts">
                             <img src={Logo} className="navproductslogo" alt="logo" />
-                            <SongThor/> <h1> SUT</h1> </div>
+                            <SongThor/> <h3> SUT</h3> </div>
                         <div className="sidebar-btnproducts" onClick={toggleSidebar}>
                             <i className="fa-solid fa-bars"></i>
                         </div>

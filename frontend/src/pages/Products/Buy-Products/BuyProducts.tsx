@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"; // เพิ่ม useParams
-import { CreateOrder, CreateProductsOrder, GetProductsById ,CreateRoomChat,GetSellerByMemberId,GetMemberBySeller,UpProductsById} from '../../../services/http/index';
+import { CreateOrder, CreateProductsOrder, GetProductsById ,CreateRoomChat,GetMemberBySeller,UpProductsById} from '../../../services/http/index';
 import "./BuyProducts.css";
 import { message ,Avatar ,Rate} from "antd";
 import '../../Review/ReviewSeller/ReviewSeller.css';
@@ -41,8 +41,6 @@ interface Member {
   ProfilePic: string;
 }
 
-
-
 const Byproduct: React.FC = () => {
   const [product, setProduct] = useState<Products | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -50,8 +48,7 @@ const Byproduct: React.FC = () => {
   const [memberId, setMemberId] = useState<number | null>(null);
   const MemberID = Number(localStorage.getItem("id"));
   const [Title, setSearchTitle] = useState<string>("");
-  const [messageApi, contextHolder] = message.useMessage();
-  const [seller, setSeller] = useState<MemberBySeller | null>(null); // เก็บข้อมูลของผู้ขาย
+  const [seller, setSeller] = useState<MemberBySeller | null>(null);
   const [isShopRatingVisible, setIsShopRatingVisible] = useState(false);
   const [averageRating, setAverageRating] = useState<number | null>(null);
   const [reviewCount, setReviewCount] = useState<number>(0);
@@ -59,8 +56,8 @@ const Byproduct: React.FC = () => {
   const [members, setMembers] = useState<Member[]>([]);
 
 
-  const { id } = useParams<{ id: string }>(); // ใช้ useParams เพื่อรับ productId จาก path
-  const productId = Number(id); // แปลงค่า id เป็นตัวเลข
+  const { id } = useParams<{ id: string }>();
+  const productId = Number(id);
 
 
   useEffect(() => {
@@ -71,22 +68,22 @@ const Byproduct: React.FC = () => {
       }
     };
     fetchProduct();
-    setMemberId(MemberID); // สมมติว่า MemberID ถูกตั้งเป็น 7
+    setMemberId(MemberID);
   }, [productId]);
 
 
   const handleShopRating = () => {
-    setIsShopRatingVisible(true); // Open the modal
+    setIsShopRatingVisible(true);
   };
 
   const closeShopRating = () => {
-    setIsShopRatingVisible(false); // Close the modal
+    setIsShopRatingVisible(false);
   };
 
 
   const handleSearch = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && Title.trim()) {
-      navigate(`/search/${Title}`); // นำทางไปยัง path ที่ต้องการ
+      navigate(`/search/${Title}`);
     }
   };
 
@@ -95,10 +92,9 @@ const Byproduct: React.FC = () => {
       const data: Products = await GetProductsById(productId);
       if (data) {
         setProduct(data);
-        // ดึงข้อมูลผู้ขายโดยใช้ SellerID
         const sellerData = await GetMemberBySeller(data.SellerID);
         if (sellerData) {
-          setSeller(sellerData); // เซ็ตข้อมูลผู้ขายลงใน state
+          setSeller(sellerData);
         }
       }
     };
@@ -107,41 +103,34 @@ const Byproduct: React.FC = () => {
   
 
   const handleBuyProduct = () => {
-    setIsModalVisible(true); // Show custom Modal for confirmation
+    setIsModalVisible(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalVisible(false); // Close the custom Modal without ordering
+    setIsModalVisible(false);
   };
 
   const handleChatWithSeller = async () => {
     if (memberId !== null && product) {
-      // เช็คว่ามี memberId และ product หรือไม่
-      // ถ้ามี จะทำการสร้างห้องแชทโดยส่ง MemberID และ SellerID
       const result = await CreateRoomChat(MemberID, product.SellerID);
-      
-      // ตรวจสอบผลลัพธ์จากการสร้างห้องแชท
       if (result) {
         if (result.message === "Room already exists") {
-          // ถ้าห้องแชทมีอยู่แล้ว นำทางไปยังหน้า ChatBuyer
           navigate('/ChatBuyer');
         } else {
-          // ถ้าสร้างห้องแชทสำเร็จ จะนำทางไปยังหน้า ChatBuyer
           navigate('/ChatBuyer');
         }
       } else {
-        // ถ้ามีข้อผิดพลาด จะตั้งค่าข้อความข้อผิดพลาด
+
         setErrorMessage(result.message || "เกิดข้อผิดพลาดในการสร้างห้องแชท");
       }
     }
   };
 
-  //-------------------------
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        if (product?.SellerID) { // ตรวจสอบว่า product มีข้อมูลก่อน
+        if (product?.SellerID) {
           const response = await axios.get<Review[]>(`http://localhost:8000/review/seller/${product.SellerID}`);
           if (Array.isArray(response.data)) {
             setReviews(response.data);
@@ -218,8 +207,7 @@ const Byproduct: React.FC = () => {
           };
   
           await CreateProductsOrder(productsOrderData);
-  
-          // อัปเดตสถานะสินค้า หลังจากคำสั่งซื้อสำเร็จ
+
           const Productsdata: Products = {
             ...product,
             Status: 'NonAvailable',
@@ -235,7 +223,6 @@ const Byproduct: React.FC = () => {
       console.error("Error during order creation:", error);
       message.error("เกิดข้อผิดพลาดในการซื้อสินค้า กรุณาลองใหม่อีกครั้ง");
     } finally {
-      // ปิด Modal หลังจากที่ทำงานเสร็จแล้ว ไม่ว่ากรณีใดๆ
       setIsModalVisible(false);
     }
   };
@@ -290,7 +277,7 @@ const Byproduct: React.FC = () => {
             <Avatar
               src={seller?.ProfilePic}
               alt={`Contact ${seller?.FirstName || "Unknown Seller"}`}
-              className="custom-avatar" // เพิ่ม class สำหรับ CSS
+              className="custom-avatar"
             />
             <p className="seller-name">
               {seller?.FirstName} {seller?.LastName}
@@ -298,8 +285,6 @@ const Byproduct: React.FC = () => {
           </div>
         )}
       </div>
-
-      {/* ส่วนแสดงรีวิวแบบตลอดเวลา */}
       <div className="review-page-Bymember">
   <p>คะแนนเฉลี่ย: {averageRating?.toFixed(2)} ⭐</p>
   <Rate allowHalf disabled value={averageRating || 0} />
