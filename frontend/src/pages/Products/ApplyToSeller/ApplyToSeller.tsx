@@ -192,13 +192,13 @@ function ApplyToSeller() {
   };
 
   return (
-    <div>
+    <div className='body'>
       <Flex>
         {contextHolder}
         <Card
           style={{
             marginTop: "30px",
-            marginLeft: "250px",
+            marginLeft: "60px",
             borderRadius: "12px",
             padding: "24px",
             background: "#e2dfdf",

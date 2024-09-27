@@ -1,7 +1,7 @@
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Button, Card, Col, Flex, Form, Row, message } from "antd";
+import { Avatar, Card, Col, Flex, Form, Row, message } from "antd";
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from '../../../assets/LogoOrange.png';
 import backarrow from "../../../assets/back-arrow.png";
 import { MemberInterface } from '../../../interfaces/Member';
@@ -105,7 +105,7 @@ function Profile() {
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
               <div className="back-arrow" onClick={handleHome}>
                 <img src={backarrow} alt="backarrow" 
-                    style={{width: "40px",cursor: "pointer",marginLeft: "130px",}}/>
+                    style={{width: "40px",cursor: "pointer",marginLeft: "500px",}}/>
               </div>
             </Col>
 

@@ -74,7 +74,7 @@ const Index: React.FC = () => {
   return (
     <div className="myproductSeller">
       {contextHolder}
-      <h1>My Products</h1>
+      <h1 className="myproduct-h1">My Products</h1>
       <Navbarproducts/>
       <div className="product-list">
       {products.length > 0 ? (

@@ -38,6 +38,8 @@ func main() {
 		router.GET("/seller/member/:member_id", controller.GetSellerByMemberId)
 		router.GET("/sellers/:seller_id/member/:member_id", controller.GetSellerIdByMemberID)
 		router.GET("/memberbyseller/:id", controller.GetMemberBySeller)
+		router.GET("/seller/StudentID/:studentid", controller.GetSellerByStudentId)
+
 		
 		//Order
 		router.POST("/orders", controller.CreateOrder)
@@ -77,6 +79,7 @@ func main() {
 		router.GET("/roomchat/messages/:room_id", controller.GetMessages)
 		router.GET("/roomchat/seller/:id",controller.RoomChatBySellerID)
 		router.GET("/roomchat/member/:id",controller.RoomChatByMemberID)
+
 
 		//Message
 		router.POST("/message", controller.CreateMessage)

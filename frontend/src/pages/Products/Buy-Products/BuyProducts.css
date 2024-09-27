@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-between;
   }
-  .Buyproducts h1 {
+  .Buyproducts-h1 {
     position: absolute;
     color: rgba(0, 0, 0, 0.624);
     font-size: 28px;
@@ -19,7 +19,7 @@
     padding-left: 577px;
 
   }
-  .Buyproducts h2 {
+  .Buyproducts-h2 {
     margin-left: -65px;
     margin-top: 30px;
     position: absolute;
@@ -29,7 +29,7 @@
     padding-top: 540px;
     padding-left: 637px;
   }
-  .Buyproducts h3 {
+  .Buyproducts-h3 {
     position: absolute;
     color: rgba(0, 0, 0, 0.624);
     font-size: 28px;

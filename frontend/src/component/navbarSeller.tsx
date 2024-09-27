@@ -128,7 +128,7 @@ const NavbarSeller = () => {
                     <div className="header-menuseller">
                         <div className="titleseller">
                             <img src={Logo} className="navsellerlogo" alt="logo" />
-                            <SongThor/> <h1> SUT</h1> </div>
+                            <SongThor/>  </div>
                         <div className="sidebar-btnseller" onClick={toggleSidebar}>
                             <i className="fa-solid fa-bars"></i>
                         </div>

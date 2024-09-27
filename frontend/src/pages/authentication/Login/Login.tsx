@@ -51,6 +51,7 @@ function LoginPage() {
   };
 
   return (
+    <div className='body'>
     <>
       {contextHolder}
       <Flex justify="center" align="center" className="login">
@@ -99,6 +100,7 @@ function LoginPage() {
         </Card>
       </Flex>
     </>
+    </div>
   );
 }
 

@@ -141,7 +141,7 @@ const Navbarproductsber = () => {
                     <div className="header-menuproducts">
                         <div className="titleproducts">
                             <img src={Logo} className="navproductslogo" alt="logo" />
-                            <SongThor/> <h3> SUT</h3> </div>
+                            <SongThor/>  </div>
                         <div className="sidebar-btnproducts" onClick={toggleSidebar}>
                             <i className="fa-solid fa-bars"></i>
                         </div>

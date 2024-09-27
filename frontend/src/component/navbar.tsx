@@ -44,7 +44,7 @@ const Navbar = () => {
                     <div className="header-menu">
                         <div className="title">
                             <img src={Logo} className="navlogo" alt="logo" />
-                            <SongThor/> <h1> SUT</h1> </div>
+                            <SongThor/></div>
                         <div className="sidebar-btn" onClick={toggleSidebar}>
                             <i className="fa-solid fa-bars"></i>
                         </div>
@@ -55,9 +55,6 @@ const Navbar = () => {
                                 <input
                                       type="text"
                                       placeholder="ค้นหา"
-                                    //   value={Title}
-                                    //   onChange={(e) => setSearchTitle(e.target.value)} // อัปเดตคำค้นหา
-                                    //   onKeyPress={handleSearch} // เรียกใช้ฟังก์ชันเมื่อกด Enter
                                     />
                                 </div>
                             </li>

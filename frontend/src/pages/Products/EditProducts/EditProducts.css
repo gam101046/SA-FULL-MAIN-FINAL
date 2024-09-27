@@ -1,3 +1,15 @@
+
+
+.body {
+  width: 100vw;
+  height: 100vh;
+  background-color: #2e2f33;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -70px;
+}
+
 .product-form-container {
   background-color: #f5f5f5;
   padding: 20px;

@@ -94,12 +94,20 @@ const Index: React.FC = () => {
     setConfirmLoading(true);
     try {
       await DeleteOrder(deleteId!);
+      if (deleteId !== undefined) {
+        const product = products.find(product => product.OrderID === deleteId);
+        if (product) {
+          const updatedProduct: Product = {
+            ...product,
+            Status: 'Available',
+          };
+  
+          await UpProductsById(product.ID, updatedProduct);
+        }
+      }
+  
       setOpen(false);
       setConfirmLoading(false);
-      messageApi.open({
-        type: "success",
-        content: "ลบข้อมูลคำสั่งซื้อสำเร็จ",
-      });
       fetchProducts();
     } catch (error) {
       setConfirmLoading(false);
@@ -109,6 +117,7 @@ const Index: React.FC = () => {
       });
     }
   };
+  
 
   const handleCancel = () => {
     setOpen(false);
@@ -117,10 +126,7 @@ const Index: React.FC = () => {
   const showReviewModal = (product: Product) => {
     setSelectedProduct(product);
     setIsModalVisible(true);
-    const Productsdata: Product = {
-      ...product,
-      Status: 'Available',
-    }; UpProductsById(product.ID, Productsdata);
+    
   };
 
   const handleReviewOk = async () => {
@@ -199,9 +205,9 @@ const Index: React.FC = () => {
 
   return (
     <div className="order">
+      <h1 style={{ color: 'back', fontSize: '24px', margin: 0,marginTop: -145 ,marginLeft: 10}}>รายการคำสั่งซื้อ </h1>
       {contextHolder}
       <NavbarSeller/>
-      <h2>รายการคำสั่งซื้อ</h2>
       <Table
         rowKey="ID"
         columns={columns}

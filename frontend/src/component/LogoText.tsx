@@ -7,23 +7,26 @@ const SongThor = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setHighlightIndex((prevIndex) => (prevIndex + 1) % text.length);
-    }, 430); // ความเร็วในการเปลี่ยนสี (300ms)
+    }, 430); // ความเร็วในการเปลี่ยนสี (430ms)
     return () => clearInterval(interval);
   }, [text.length]);
 
   return (
-    <div>
-      {text.split('').map((char, index) => (
-        <span
-          key={index}
-          style={{
-            color: index === highlightIndex ? 'orange' : 'white', // เฉพาะตัวที่อยู่ใน highlightIndex เป็นสีแดง ตัวอื่นกลับเป็นสีดำ
-            transition: 'color 0.6s ease', // ให้การเปลี่ยนสีเนียน
-          }}
-        >
-          {char}
-        </span>
-      ))}
+    <div style={{ display: 'flex', alignItems: 'center', marginLeft: 20 }}>
+      <div style={{ display: 'inline', fontSize: '24px' }}>
+        {text.split('').map((char, index) => (
+          <span
+            key={index}
+            style={{
+              color: index === highlightIndex ? 'orange' : 'white',
+              transition: 'color 0.6s ease',
+            }}
+          >
+            {char}
+          </span>
+        ))}
+      </div>
+      <h3 style={{ color: 'red', fontSize: '24px', margin: 0, marginLeft: 10 }}>SUT</h3>
     </div>
   );
 };

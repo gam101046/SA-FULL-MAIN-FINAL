@@ -4,7 +4,7 @@ import './ProfileEdit.css';
 import logo from '../../../../assets/LogoOrange.png';
 import { Button, Form, Input, message, Divider, Upload } from "antd";
 import { MemberInterface } from "../../../../interfaces/Member";
-import { GetMemberById, UpdateMemberById } from "../../../../services/http";
+import { GetMemberById,UpdateMemberById,GetSellerByMemberId} from "../../../../services/http";
 import { useNavigate, Link } from "react-router-dom";
 import ImgCrop from "antd-img-crop";
 import type { GetProp, UploadFile, UploadProps } from "antd";
@@ -128,8 +128,36 @@ function ProfileEdit() {
     GetMemberid();
   }, [storedUid, form]);
 
+  const handleHome = async () => {
+    if (uid === null) {
+      messageApi.open({ type: "error", content: "ไม่พบ ID สมาชิก" });
+      return;
+    }
+  
+    try {
+      const sellerData = await GetSellerByMemberId(uid);
+      if (sellerData && sellerData.error) {
+        messageApi.open({
+          type: "error",
+          content: sellerData.error,
+        });
+        navigate('/HomeMember');
+      } else if (sellerData) {
+        navigate('/HomeSeller');
+      } else {
+        navigate('/HomeMember');
+      }
+    } catch (error) {
+      messageApi.open({
+        type: "error",
+        content: "เกิดข้อผิดพลาดในการดึงข้อมูลผู้ขาย",
+      });
+    }
+  };
+
+
   return (
-    <>
+    <div className='body'>
       {contextHolder}
       <div className="profileedit-container">
         <div className="profileedit-box">
@@ -188,18 +216,15 @@ function ProfileEdit() {
                 <Button type="primary" htmlType="submit" className="btn update">
                   Update
                 </Button>
-
-                <Link to="/HomeMember">
-                  <Button type="primary" htmlType="button" className="btn cancel">
+                  <Button type="primary" htmlType="button" className="btn cancel" onClick={handleHome}>
                     Cancel
                   </Button>
-                </Link>
               </center>
             </Form.Item>
           </Form>
         </div>
       </div>
-    </>
+      </div>
   );
 }
 

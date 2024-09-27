@@ -18,7 +18,7 @@ import type { UploadFile, UploadProps } from "antd";
 
 import { useState } from "react";
 
-import { Upload } from "antd"; 
+import { Upload } from "antd";
 
 import "./Signup.css"
 
@@ -94,7 +94,7 @@ function SignUpPages() {
 
   return (
 
-    <>
+    <div className='body'>
 
       {contextHolder}
 
@@ -228,7 +228,7 @@ function SignUpPages() {
 
       </Flex>
 
-    </>
+      </div>
 
   );
 

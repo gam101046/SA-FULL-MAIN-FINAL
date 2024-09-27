@@ -540,10 +540,10 @@ function EditProducts() {
   };
 
   return (
-    <>
+    <div className='body'>
       {contextHolder}
       <Flex>
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" ,marginRight: 150}}>
           <Card
             style={{
               marginLeft: "200px",
@@ -718,8 +718,8 @@ function EditProducts() {
                       size="large"
                       // onClick={OpenSellerHome}
                       style={{
-                        backgroundColor: "#212020",
-                        borderColor: "#212020",
+                        backgroundColor: "#ffa24c",
+                        borderColor: "#ffa24c",
                         borderRadius: "8px",
                         padding: "0 60px",
                         marginLeft:"750px",
@@ -737,8 +737,8 @@ function EditProducts() {
                       // onClick={OpenSellerHome}
                       style={{
                         width:"160px",
-                        backgroundColor: "#ffa24c",
-                        borderColor: "#ffa24c",
+                        backgroundColor: "#212020",
+                        borderColor: "#212020",
                         borderRadius: "8px",
                         padding: "0 60px",
                         marginLeft:"350px",
@@ -756,7 +756,7 @@ function EditProducts() {
           </Card>
         </div>
       </Flex>
-  </>
+  </div>
   
   );
 };

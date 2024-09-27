@@ -47,7 +47,6 @@ const Byproduct: React.FC = () => {
   const navigate = useNavigate();
   const [memberId, setMemberId] = useState<number | null>(null);
   const MemberID = Number(localStorage.getItem("id"));
-  const [Title, setSearchTitle] = useState<string>("");
   const [seller, setSeller] = useState<MemberBySeller | null>(null);
   const [isShopRatingVisible, setIsShopRatingVisible] = useState(false);
   const [averageRating, setAverageRating] = useState<number | null>(null);
@@ -81,12 +80,6 @@ const Byproduct: React.FC = () => {
   };
 
 
-  const handleSearch = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && Title.trim()) {
-      navigate(`/search/${Title}`);
-    }
-  };
-
   useEffect(() => {
     const fetchProductAndSeller = async () => {
       const data: Products = await GetProductsById(productId);
@@ -112,7 +105,13 @@ const Byproduct: React.FC = () => {
 
   const handleChatWithSeller = async () => {
     if (memberId !== null && product) {
-      const result = await CreateRoomChat(MemberID, product.SellerID);
+      // ตรวจสอบว่า member กับ seller เป็นคนเดียวกันหรือไม่
+      if (memberId === product.SellerID) {
+        setErrorMessage("ไม่สามารถแชทกับผู้ขายได้");
+        return;
+      }
+      const result = await CreateRoomChat(memberId, product.SellerID);
+      
       if (result) {
         if (result.message === "Room already exists") {
           navigate('/ChatBuyer');
@@ -120,11 +119,11 @@ const Byproduct: React.FC = () => {
           navigate('/ChatBuyer');
         }
       } else {
-
         setErrorMessage(result.message || "เกิดข้อผิดพลาดในการสร้างห้องแชท");
       }
     }
   };
+  
 
 
   useEffect(() => {
@@ -185,8 +184,6 @@ const Byproduct: React.FC = () => {
   }, [, reviews]);
 
 
-  
-
   const confirmOrder = async () => {
     try {
       if (product && memberId !== null) {
@@ -236,7 +233,7 @@ const Byproduct: React.FC = () => {
   return (
     <div className="Buyproducts">
       <NavbarMember />
-      <h1
+      <h1 className="Buyproducts-h1"
         style={{
           marginTop: "40px",
           fontSize: "30px",
@@ -256,7 +253,7 @@ const Byproduct: React.FC = () => {
       )}
         {product.Title}
       </h1>
-      <h2>฿{product.Price}</h2>
+      <h2 className="Buyproducts-h2" >฿{product.Price}</h2>
       <div className="frame-1">
         <img src={product.PictureProduct} alt="Product" />
       </div>

@@ -343,3 +343,23 @@ func GetMemberBySeller(c *gin.Context) {
     // ส่งข้อมูล Member กลับไปในรูปแบบ JSON
     c.JSON(http.StatusOK, seller.Member)
 }
+
+
+// GET /sellers/StudentID/:studentid
+func GetSellerByStudentId(c *gin.Context) {
+	studentID := c.Param("studentid") // Extract the StudentID from the URL parameter
+	var seller entity.Seller
+
+	db := config.DB()
+
+	// Search for the seller by the StudentID, and preload the Member table (if necessary)
+	result := db.Preload("Member").Where("student_id = ?", studentID).First(&seller)
+	if result.Error != nil {
+		// If no seller is found or another error occurs, return a 404 Not Found status with the error message
+		c.JSON(http.StatusNotFound, gin.H{"error": "Seller not found: " + result.Error.Error()})
+		return
+	}
+
+	// If the seller is found, return the seller's data
+	c.JSON(http.StatusOK, seller)
+}

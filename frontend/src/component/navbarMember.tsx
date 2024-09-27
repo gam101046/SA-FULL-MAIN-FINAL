@@ -108,11 +108,10 @@ const NavbarMember = () => {
                     <div className="header-menumem">
                         <div className="titlemem">
                             <img src={Logo} className="navmemlogo" alt="logo" />
-                            <SongThor/> <h1> SUT</h1> </div>
+                            <SongThor/> </div>
                         <div className="sidebar-btnmem" onClick={toggleSidebar}>
                             <i className="fa-solid fa-bars"></i>
                         </div>
-
                         <ul>
                             <li>
                                 <div className="navbar-searchmem">
