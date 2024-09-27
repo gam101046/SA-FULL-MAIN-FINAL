@@ -1,7 +1,7 @@
-import { Button, Card, Input, message } from "antd";
+import {  Card,  message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { GetProductsByTitle,GetSellerByMemberId } from "../../../services/http/index"; 
+import { GetProductsByTitle} from "../../../services/http/index";
 import "./searchproducts.css";
 import NavbarMember from "../../../component/NavbarSearch";
 const { Meta } = Card;
@@ -14,6 +14,7 @@ interface Products {
   Description: string;
   SellerID: number;
   OrderID?: number;
+  Status: String
 }
 
 const Index: React.FC = () => {
@@ -29,8 +30,10 @@ const Index: React.FC = () => {
     try {
       const result = await GetProductsByTitle(searchTitle);
       console.log('API result:', result);
+      
       if (Array.isArray(result)) {
-        setProducts(result);
+        const availableProducts = result.filter(product => product.Status === "Available");
+        setProducts(availableProducts);
       } else {
         console.error('Data format is incorrect:', result);
         messageApi.open({
@@ -46,7 +49,7 @@ const Index: React.FC = () => {
       });
     }
   };
-
+  
 
   const handleProductClick = (id: number) => {
     navigate(`/BuyProduct/${id}`);
@@ -55,15 +58,15 @@ const Index: React.FC = () => {
   useEffect(() => {
     if (title) {
       setSearchTitle(title);
-      fetchProductsByTitle(); // เรียกค้นหาสินค้าเมื่อมี title
+      fetchProductsByTitle();
     }
   }, [title]);
 
   useEffect(() => {
     if (searchTitle) {
-      fetchProductsByTitle(); // ค้นหาสินค้าทุกครั้งที่ searchTitle เปลี่ยนแปลง
+      fetchProductsByTitle();
     } else {
-      setProducts([]); // หากไม่มีการค้นหา ให้ล้างผลลัพธ์สินค้า
+      setProducts([]);
     }
   }, [searchTitle]);
 
@@ -72,7 +75,7 @@ const Index: React.FC = () => {
     <div className="myproducts">
       {contextHolder}
       <NavbarMember/>
-      <h1>รายการค้นหา</h1>
+      <h1 style={{ color: 'back', fontSize: '24px', margin: 0,marginTop: 90 ,marginRight: 1200}}>รายการค้นหา </h1>
       <div className="product-list">
         {products.length > 0 ? (
           products.map(product => (

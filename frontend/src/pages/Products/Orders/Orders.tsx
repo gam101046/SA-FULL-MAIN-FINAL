@@ -207,7 +207,7 @@ const Index: React.FC = () => {
 
   return (
     <div className="orderbymember">
-      <h1 style={{ color: 'back', fontSize: '24px', margin: 0,marginTop: -145 ,marginLeft: 10}}>รายการคำสั่งซื้อ </h1>
+      <h1 style={{ color: 'back', fontSize: '24px', margin: 0,marginTop: 145 ,marginLeft: 130}}>รายการคำสั่งซื้อ </h1>
       {contextHolder}
       <NavbarMember/>
         <Table

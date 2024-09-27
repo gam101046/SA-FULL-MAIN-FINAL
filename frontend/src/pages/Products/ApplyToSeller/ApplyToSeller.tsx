@@ -1,25 +1,29 @@
 // เช็คว่ารหัส นศ ควรมี 8 ตัว และเช็ครหัสที่เคยสมัครได้แล้ว เช็คทั้งตัวใหญ่และตัวเล็กได้แล้ว ห้ามแก้ไข !!!!!!!!!!!!!!!!!!!!!!
 
-import React, { useEffect, useState } from "react";
-import backarrow from "../../../assets/back-arrow.png";
-import { useNavigate } from "react-router-dom";
-import Logo from "../../../assets/logo.png";
-import "./ApplyToSeller.css";
+import { UploadOutlined } from "@ant-design/icons";
 import {
   Button,
-  Form,
-  Row,
-  Col,
-  Input,
-  Select,
   Card,
+  Col,
   Flex,
-  message,
-  Upload,
+  Form,
   GetProp,
-  UploadProps,
+  Input,
+  Row,
+  Select,
+  Upload,
   UploadFile,
+  UploadProps,
+  message,
 } from "antd";
+import ImgCrop from "antd-img-crop";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import backarrow from "../../../assets/back-arrow.png";
+import Logo from "../../../assets/logo.png";
+import { InstituteOfInterface } from "../../../interfaces/InstituteOf";
+import { MemberInterface } from "../../../interfaces/Member";
+import { SellerInterface } from "../../../interfaces/Seller";
 import { YearsInterface } from "../../../interfaces/Years";
 import {
   CreateSeller,
@@ -28,11 +32,7 @@ import {
   GetSellerByStudentId,
   GetYear,
 } from "../../../services/http/index";
-import { SellerInterface } from "../../../interfaces/Seller";
-import { InstituteOfInterface } from "../../../interfaces/InstituteOf";
-import { UploadOutlined } from "@ant-design/icons";
-import ImgCrop from "antd-img-crop";
-import { MemberInterface } from "../../../interfaces/Member";
+import "./ApplyToSeller.css";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 const { Option } = Select;

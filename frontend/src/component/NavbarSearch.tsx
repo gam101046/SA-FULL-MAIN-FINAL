@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../assets/logonew.png";
 import "./navbarMember.css";
 import { useState, useEffect} from "react";
-import { message, Avatar } from "antd";
+import { message, } from "antd";
 import { MemberInterface } from '../interfaces/Member';
 import {GetMemberById,GetSellerByMemberId} from '../services/http/index'
-import { UserOutlined } from '@ant-design/icons';
+import SongThor from "../component/LogoText"
 
 const NavbarMember = () => {
     const [uid , setUid] = useState<number | null>(Number(localStorage.getItem("id")))
@@ -87,15 +87,6 @@ const NavbarMember = () => {
         }, 2000);
     };
 
-    const handleToHomeMember = () => {
-      navigate('/HomeMember'); // Navigate to ApplyToSeller page
-      };
-
-    
-
-    const handleToProfileEdit = () => {
-      navigate('/Profile/ProfileEdit/:id'); // Navigate to ApplyToSeller page
-      };
     const handleToOrder = () => {
       navigate('/Card'); // Navigate to ApplyToSeller page
       };
@@ -109,7 +100,7 @@ const NavbarMember = () => {
 
     return (
         <html lang="en" dir="ltr">
-        {contextHolder}  
+        {contextHolder}
         <head>
             <meta charSet="utf-8"></meta>
             <title>Sidebar Dashboard Template with Sub Menu</title>
@@ -122,7 +113,7 @@ const NavbarMember = () => {
                     <div className="header-menumem">
                         <div className="titlemem">
                             <img src={Logo} className="navmemlogo" alt="logo" />
-                            SongThor <span>SUT</span> 
+                            <SongThor/>
                         </div>
                         <div className="sidebar-btnmem" onClick={toggleSidebar}>
                             <i className="fa-solid fa-bars"></i>
@@ -149,54 +140,6 @@ const NavbarMember = () => {
                         </ul>
                     </div>
                 </div>
-
-                {/* <div className="siderbarmem">
-                    <div className="sidebar-menumem">
-                        <center className="profilemem">
-                            <Avatar size={250} src={users?.ProfilePic || undefined} icon={!users?.ProfilePic && <UserOutlined />} /> 
-                        </center>
-                        <center>
-                            <label className="username">{users?.Username} <i className="fas fa-pen-to-square" onClick={handleToProfileEdit}></i></label>
-                        </center>
-                        <li className="itemmem" onClick={handleToHomeMember}>
-                            <a href="#" className="menu-btnmem" >
-                                <i className="fas fa-house" onClick={handleHome}></i> <span>Home</span>
-                            </a>
-                        </li> */}
-                        {/* <li className="itemmem" id="profile">
-                            <a href="#profile" className="menu-btnmem">
-                                <i className="fas fa-user-circle"> </i><span>Profile <i className="fas fa-chevron-down drop-downmem"></i></span>
-                            </a>
-                            <div className="sub-menumem">
-                                <a onClick={handleToProfile}> <i className="fas fa-user" ></i><span>MyProfile</span></a>
-                                <a onClick={handleToOrder}> <i className="fas fa-bag-shopping"></i><span>คำสั่งซื้อของฉัน</span></a>
-                                <a onClick={handleToMyReview}> <i className="fas fa-star"></i><span>MyReview</span></a>
-                            </div>
-                        </li> */}
-
-                        {/* <li className="itemmem" id="messages"> 
-                            <a href="#messages" className="menu-btnmem">
-                                <i className="fas fa-envelope"> </i><span>Messages <i className="fas fa-chevron-down drop-downmem"></i></span>
-                            </a>
-                            <div className="sub-menumem">
-                                <a onClick={handleToChatBuyer}> <i className="fas fa-brands fa-rocketchat"></i><span>ChatBuyer</span></a>
-                                <a > <i className="fas fa-envelope"></i><span>ChatSeller</span></a>
-                            </div>
-                        </li> */}
-
-                        {/* <li className="itemmem" id="shop"> 
-                            <a href="#shop" className="menu-btnmem">
-                                <i className="fas fa-shop"> </i><span>Market <i className="fas fa-chevron-down drop-downmem"></i></span>
-                            </a>
-                            <div className="sub-menumem">
-                                <a > <i className="fas fa-cubes"></i><span>MyOrder</span></a>
-                                <a > <i className="fas fa-trophy"></i><span>Myscore</span></a>
-                                <a > <i className="fas fa-solid fa-shapes"></i><span>MyProducts</span></a>
-                            </div>
-                        </li> */}
-{/* 
-                    </div> */}
-                {/* </div> */}
 
                 <div className="main-containermem"></div>
             </div>

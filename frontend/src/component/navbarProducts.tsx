@@ -108,10 +108,13 @@ const Navbarproductsber = () => {
     const handleToMyReview = () => {
       navigate('/ProductSeller'); // Navigate to ApplyToSeller page
       };
-
-    const handleToChatBuyer = () => {
-      navigate('/ChatBuyer'); // Navigate to ApplyToSeller page
-      };
+      const handleToChatBuyer = () => {
+        navigate('/ChatBuyerBySeller'); // Navigate to ApplyToSeller page
+        };
+  
+      const handleToChatSeller = () => {
+        navigate('/ChatSeller'); // Navigate to ApplyToSeller page
+        };
     const handleToMyOrder = () => {
       navigate('/MyOrder'); // Navigate to ApplyToSeller page
       };
@@ -194,7 +197,7 @@ const Navbarproductsber = () => {
                             </a>
                             <div className="sub-menuproducts">
                                 <a onClick={handleToChatBuyer}> <i className="fas fa-brands fa-rocketchat"></i><span>ChatBuyer</span></a>
-                                <a > <i className="fas fa-envelope"></i><span>ChatSeller</span></a>
+                                <a onClick={handleToChatSeller}> <i className="fas fa-envelope"></i><span>ChatSeller</span></a>
                             </div>
                         </li>
                         <li className="itemproducts" id="shop"> 
