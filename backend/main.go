@@ -84,7 +84,7 @@ func main() {
 		
 
 		//Review
-		router.POST("/review", controller.CreateReview)
+		
 		router.PUT("/review/:id", controller.UpdateReview)
 		router.DELETE("/review/:id", controller.DeleteReview)
 		router.GET("/review", controller.GetAllReview)
