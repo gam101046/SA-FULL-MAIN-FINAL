@@ -70,6 +70,7 @@ func main() {
 		router.GET("/instituteof", controller.GetInstituteOf)
 		router.GET("/category", controller.GetCategory)
 		router.GET("/condition", controller.GetCondition)
+		// router.GET("/major", controller.GetMajor)
 
 		//RoomChat
 		router.GET("/roomchat/:member_id/:seller_id", controller.GetRoomChatByMemberAndSellerID)
