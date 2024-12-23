@@ -78,12 +78,6 @@ func main() {
 		router.GET("/roomchat/seller/:id",controller.RoomChatBySellerID)
 		router.GET("/roomchat/member/:id",controller.RoomChatByMemberID)
 
-
-		//Message
-		router.POST("/message", controller.CreateMessage)
-		
-
-		//Review
 		
 		router.PUT("/review/:id", controller.UpdateReview)
 		router.DELETE("/review/:id", controller.DeleteReview)
