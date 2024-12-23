@@ -70,6 +70,7 @@ func main() {
 		router.GET("/instituteof", controller.GetInstituteOf)
 		router.GET("/category", controller.GetCategory)
 		router.GET("/condition", controller.GetCondition)
+		// router.GET("/major", controller.GetMajor)
 
 		//RoomChat
 		router.GET("/roomchat/:member_id/:seller_id", controller.GetRoomChatByMemberAndSellerID)
@@ -78,7 +79,13 @@ func main() {
 		router.GET("/roomchat/seller/:id",controller.RoomChatBySellerID)
 		router.GET("/roomchat/member/:id",controller.RoomChatByMemberID)
 
+
+		//Message
+		router.POST("/message", controller.CreateMessage)
 		
+
+		//Review
+		router.POST("/review", controller.CreateReview)
 		router.PUT("/review/:id", controller.UpdateReview)
 		router.DELETE("/review/:id", controller.DeleteReview)
 		router.GET("/review", controller.GetAllReview)
