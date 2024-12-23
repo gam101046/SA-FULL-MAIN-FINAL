@@ -179,19 +179,6 @@ async function DeleteOrder(id: number | undefined) {
 
 
 
-//Seller
-
-
-// async function GetSeller() {
-//   const seller = localStorage.getItem('seller_id');
-//   if (!seller) {
-//     throw new Error('Seller not found in localStorage');
-//   }
-
-//   return await GetSellerByStudentId(seller);
-// }
-
-
 
 async function GetSellerByStudentId(StudentID: string) {
   return await axios

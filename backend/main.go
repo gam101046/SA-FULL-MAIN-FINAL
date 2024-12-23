@@ -62,7 +62,6 @@ func main() {
 
 		//Product_Order
 		router.POST("/products_orders", controller.CreateProductsOrder)
-		router.GET("/products_orders", controller.ListProductsOrders)
         router.DELETE("/products_orders/:id", controller.DeleteProductsOrder)
 		router.GET("/products_orders/:order_id", controller.GetProductsOrdersByOrderID)
 

@@ -49,43 +49,34 @@ const Byproduct: React.FC = () => {
   const navigate = useNavigate();
   const [memberId, setMemberId] = useState<number | null>(null);
   const MemberID = Number(localStorage.getItem("id"));
-  const [seller, setSeller] = useState<MemberBySeller | null>(null); // เก็บข้อมูลของผู้ขาย
+  const [seller, setSeller] = useState<MemberBySeller | null>(null);
   const [averageRating, setAverageRating] = useState<number | null>(null);
   const [reviewCount, setReviewCount] = useState<number>(0);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [members, setMembers] = useState<Member[]>([]);
-
-
-  const { id } = useParams<{ id: string }>(); // ใช้ useParams เพื่อรับ productId จาก path
-  const productId = Number(id); // แปลงค่า id เป็นตัวเลข
-
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const data: Products = await GetProductsById(productId);
-      if (data) {
-        setProduct(data);
-      }
-    };
-    fetchProduct();
-    setMemberId(MemberID); // สมมติว่า MemberID ถูกตั้งเป็น 7
-  }, [productId]);
-
+  const { id } = useParams<{ id: string }>();
+  const productId = Number(id);
 
   useEffect(() => {
     const fetchProductAndSeller = async () => {
-      const data: Products = await GetProductsById(productId);
-      if (data) {
-        setProduct(data);
-        // ดึงข้อมูลผู้ขายโดยใช้ SellerID
-        const sellerData = await GetMemberBySeller(data.SellerID);
-        if (sellerData) {
-          setSeller(sellerData); // เซ็ตข้อมูลผู้ขายลงใน state
+      try {
+        const data: Products = await GetProductsById(productId); // ดึงข้อมูลสินค้า
+        if (data) {
+          setProduct(data);
+          // ดึงข้อมูลผู้ขายโดยใช้ SellerID
+          const sellerData = await GetMemberBySeller(data.SellerID);
+          if (sellerData) {
+            setSeller(sellerData); // เซ็ตข้อมูลผู้ขายลงใน state
+          }
         }
+      } catch (error) {
+        console.error("Error fetching product or seller data:", error);
       }
     };
+  
     fetchProductAndSeller();
-  }, [productId]);
+    setMemberId(MemberID);
+  }, [productId, MemberID]); // เพิ่ม MemberID ใน dependencies
   
 
   const handleBuyProduct = () => {
@@ -96,7 +87,7 @@ const Byproduct: React.FC = () => {
     setIsModalVisible(false); // Close the custom Modal without ordering
   };
 
-
+  //ส่วนของระบบแชท
   const handleChatWithSeller = async () => {
     if (memberId !== null && product) {
       if (memberId === product.SellerID) {
@@ -117,7 +108,7 @@ const Byproduct: React.FC = () => {
   };
   
 
-
+  //ส่วนของระบบรีวิว
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -174,10 +165,10 @@ const Byproduct: React.FC = () => {
       calculateAverageRating();
     }
   }, [, reviews]);
-
+  //สิ้นสุดระบบรีวิว
 
   
-
+  //เมื่อกดปุ่มซื้อสินค้า
   const confirmOrder = async () => {
     try {
       if (product && memberId !== null) {
@@ -198,14 +189,11 @@ const Byproduct: React.FC = () => {
           };
   
           await CreateProductsOrder(productsOrderData);
-  
-          // อัปเดตสถานะสินค้า หลังจากคำสั่งซื้อสำเร็จ
           const Productsdata: Products = {
             ...product,
             Status: 'NonAvailable',
           };
           await UpProductsById(productId, Productsdata);
-  
           message.success("ซื้อสินค้าสำเร็จ!");
         } else {
           throw new Error("ไม่สามารถสร้างคำสั่งซื้อได้");
@@ -224,6 +212,7 @@ const Byproduct: React.FC = () => {
   if (!product) {
     return <div>Loading...</div>;
   }
+
 
   return (
     <div className="Buyproducts">
@@ -248,7 +237,7 @@ const Byproduct: React.FC = () => {
       )}
         {product.Title}
       </h1>
-      <h2>฿{product.Price}</h2>
+      <h2 className="Buyproducts-h2" >฿{product.Price}</h2>
       <div className="frame-1">
         <img src={product.PictureProduct} alt="Product" />
       </div>
@@ -326,7 +315,7 @@ const Byproduct: React.FC = () => {
 };
 
 export default Byproduct;
-function setErrorMessage(arg0: any) {
+
+function setErrorMessage(arg0: string) {
   throw new Error("Function not implemented.");
 }
-

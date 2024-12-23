@@ -25,7 +25,6 @@ func GetProducts(c *gin.Context) { // เข้าถึงข้อมูลส
 func CreateProducts(c *gin.Context) {
 	var product entity.Products
 
-	// bind เข้าตัวแปร product
 	if err := c.ShouldBindJSON(&product); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -59,9 +58,6 @@ func CreateProducts(c *gin.Context) {
 		return
 	}
 
-	// โหลดข้อมูล Seller ที่เชื่อมโยงกับ Product นี้
-	// db.Preload("Seller").First(&p, p.ID)
-
 	c.JSON(http.StatusCreated, gin.H{"message": "Created success", "data": p})
 }
 
@@ -72,7 +68,6 @@ func GetProductsBYID(c *gin.Context) {
 
 	db := config.DB()
 
-	// ใช้ Preload เพื่อนำข้อมูล Seller มาใน Product ด้วย
 	result := db.Preload("Seller").First(&product, ID)
 	if result.Error != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": result.Error.Error()})
@@ -128,7 +123,6 @@ func GetProductsByMemberID(c *gin.Context) {
 
     db := config.DB()
 
-    // Query to join tables and filter by member_id
     result := db.
         Joins("JOIN products_orders ON products_orders.product_id = products.id").
         Joins("JOIN orders ON orders.id = products_orders.order_id").
@@ -153,7 +147,6 @@ func GetProductsByTitle(c *gin.Context) {
 
     db := config.DB()
 
-    // ค้นหาสินค้าที่มี title คล้ายกับค่าที่รับมา โดยใช้ LIKE
     result := db.Where("title LIKE ?", "%"+title+"%").Preload("Seller").Find(&products)
     if result.Error != nil {
         c.JSON(http.StatusNotFound, gin.H{"error": result.Error.Error()})
@@ -170,7 +163,6 @@ func GetProductsBySellerID(c *gin.Context) {
 
     db := config.DB()
 
-    // ค้นหาสินค้าที่มี SellerID ตรงกับค่าที่รับมา
     result := db.Where("seller_id = ?", sellerID).Preload("Seller").Find(&products)
     if result.Error != nil {
         c.JSON(http.StatusNotFound, gin.H{"error": result.Error.Error()})
@@ -182,7 +174,7 @@ func GetProductsBySellerID(c *gin.Context) {
 
 
 func UpdateProductsById(c *gin.Context) {
-    var product entity.Products  // Ensure this is the correct struct
+    var product entity.Products
 
     ProductID := c.Param("id")
 
@@ -198,7 +190,7 @@ func UpdateProductsById(c *gin.Context) {
         return
     }
 
-    result = db.Save(&product)  // Save the updated product data
+    result = db.Save(&product)
 
     if result.Error != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update product"})

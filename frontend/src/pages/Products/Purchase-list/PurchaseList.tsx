@@ -5,7 +5,8 @@ import React, { useEffect, useState } from "react";
 import { DeleteOrder, GetOrdersByProductIDAndSellerID, GetProductsBySellerId, GetMemberById, GetSellerByMemberId } from "../../../services/http/index";
 import "./PurchaseList.css";
 import { SellerInterface } from "../../../interfaces/Seller";
-import Navbarproducts from "../../../component/navbarProducts.tsx";
+import Navbarproducts from "../../../component/navbarProducts";
+
 interface Product{
   ID: number;
   Title: string;
@@ -18,6 +19,7 @@ interface Product{
   LastName?: string;
   PhoneNumber?: string;
 }
+
 interface Order {
   ID: number;
   Quantity: number;
@@ -42,6 +44,8 @@ const Index: React.FC = () => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState<string>();
   const [deleteId, setDeleteId] = useState<number | undefined>();
+
+
   const fetchSellerData = async () => {
     try {
       const sellerData = await GetSellerByMemberId(MemberID);
@@ -52,6 +56,10 @@ const Index: React.FC = () => {
       console.error("Error fetching seller data:", error);
     }
   };
+
+
+
+
   const fetchProducts = async (page: number = 1, pageSize: number = 10) => {
     setProducts([]);
     if (!seller) return;
@@ -67,7 +75,7 @@ const Index: React.FC = () => {
             for (const order of orders) {
               if (!uniqueProductOrderIds.has(order.ID)) {
                 uniqueProductOrderIds.add(order.ID);
-                const memberDatabyoeder: MemberByOrder | undefined = await GetMemberById(order.MemberID);
+                const memberDatabyoeder: MemberByOrder  = await GetMemberById(order.MemberID);
                 console.log("membr data " + memberDatabyoeder);
                 console.log("Member ID: ", order.MemberID);
                 console.log("Member Data: ", memberDatabyoeder);
@@ -92,15 +100,19 @@ const Index: React.FC = () => {
     }
   };
 
+
   useEffect(() => {
     fetchSellerData();
   }, []);
+
 
   useEffect(() => {
     if (seller) {
       fetchProducts();
     }
   }, [seller]);
+
+
 
   const columns: ColumnsType<Product> = [
     {
@@ -154,7 +166,8 @@ const Index: React.FC = () => {
     },
   ];
 
-  const showModal = (product: ProductByOrder) => {
+  
+  const showModal = (product: Product) => {
     setModalText(`คุณต้องการลบข้อมูลคำสั่งซื้อสำหรับสินค้าชื่อ "${product.Title}" หรือไม่?`);
     setDeleteId(product.OrderID);
     setOpen(true);

@@ -22,7 +22,7 @@ interface Product {
   SellerID: number;
   OrderID?: number;
   Quantity?: number;
-  Status: String
+  Status: string
 }
 
 interface Order {
@@ -45,7 +45,7 @@ const Index: React.FC = () => {
   const [reviewText, setReviewText] = useState<string>("");
   const [rating, setRating] = useState<number>(5);
 
-  // Function to fetch products with pagination
+  //ดึงข้อมูลรายการสั่งซื้อ
   const fetchProducts = async (page: number = 1, pageSize: number = 10) => {
     setProducts([]); // ตั้งค่า products ให้ว่างก่อนที่จะดึงข้อมูลใหม่
     try {
@@ -54,11 +54,11 @@ const Index: React.FC = () => {
         const updatedProducts: Product[] = [];
         const uniqueProductOrderIds = new Set<number>();
 
-        for (const product of result.products) {
+        for (const product of result.products) { //วนลูปเพื่อดึงข้อมูลคำสั่งซื้อ
           const orders: Order[] = await GetOrdersByProductIDAndMemberID(MemberID, product.ID);
           if (orders && orders.length > 0) {
-            orders.forEach((order: Order) => {
-              if (!uniqueProductOrderIds.has(order.ID)) {
+            orders.forEach((order: Order) => { //.forEach ใช้กับข้อมูลที่เป็นarray
+              if (!uniqueProductOrderIds.has(order.ID)) { //orderIDว่าซ็ำไหม
                 uniqueProductOrderIds.add(order.ID);
                 updatedProducts.push({
                   ...product,
@@ -84,15 +84,14 @@ const Index: React.FC = () => {
     fetchProducts();
   }, []);
 
+
   const showModal = (product: Product) => {
     setModalText(`คุณต้องการยกเลิกขคำสั่งซื้อสำหรับสินค้าชื่อ "${product.Title}" หรือไม่?`);
     setDeleteId(product.OrderID);
     setOpen(true);
-    const Productsdata: Product = {
-      ...product,
-      Status: 'Available',
-    }; UpProductsById(product.ID, Productsdata);
-  }; 
+  };
+
+
 
   const handleOk = async () => {
     setConfirmLoading(true);
@@ -109,7 +108,6 @@ const Index: React.FC = () => {
           await UpProductsById(product.ID, updatedProduct);
         }
       }
-  
       setOpen(false);
       setConfirmLoading(false);
       fetchProducts();
@@ -131,6 +129,8 @@ const Index: React.FC = () => {
     setIsModalVisible(true);
   };
 
+
+  
   const handleReviewOk = async () => {
     if (selectedProduct) {
       await axios.post('http://localhost:8000/review', {

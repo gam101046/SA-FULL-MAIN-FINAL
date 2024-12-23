@@ -9,11 +9,10 @@ import (
 )
 
 // POST /orders
-func CreateOrder(c *gin.Context) { // สร้างคำสั่งซื้อ
+func CreateOrder(c *gin.Context) {
 	var order entity.Order
 
-	// bind เข้าตัวแปร order
-	if err := c.ShouldBindJSON(&order); err != nil {
+	if err := c.ShouldBindJSON(&order); err != nil { // ช้เพื่อดึงข้อมูล JSON ที่ส่งเข้ามาใน Request Body และผูกข้อมูลกับตัวแปร order
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -22,14 +21,14 @@ func CreateOrder(c *gin.Context) { // สร้างคำสั่งซื้
 
 	// ตรวจสอบว่า MemberID กับ SellerID เชื่อมต่อกันหรือไม่
 	var seller entity.Seller
-	if err := db.Where("member_id = ?", order.MemberID).First(&seller).Error; err == nil { // พบ Seller ที่มี MemberID เดียวกัน
+	if err := db.Where("member_id = ?", order.MemberID).First(&seller).Error; err == nil { // ตรวจสอบว่าsellerเป็นmemberหรือไม่ กรณีที่ผู้ขายเป็นผู้ซื้อ
 		if seller.ID == *order.SellerID { // ถ้า SellerID ที่พบตรงกับ SellerID ที่ส่งมา
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Buyer cannot purchase their own product"})
 			return
 		}
 	}
 
-	// สร้าง Order
+
 	o := entity.Order{
 		Quantity:    order.Quantity,
 		Total_price: order.Total_price,
@@ -37,8 +36,8 @@ func CreateOrder(c *gin.Context) { // สร้างคำสั่งซื้
 		SellerID:    order.SellerID,
 	}
 
-	// บันทึก
-	if err := db.Create(&o).Error; err != nil {
+	
+	if err := db.Create(&o).Error; err != nil { //สร้างข้อมูล
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -75,7 +74,7 @@ func UpdateOrder(c *gin.Context) { //อัพเดตคำสั่งซื�
 		return
 	}
 
-	if err := c.ShouldBindJSON(&order); err != nil {
+	if err := c.ShouldBindJSON(&order); err != nil { //ดึงข้อมูลjsonที่ส่งมาจากrequestbodyและแมปข้อมูลนกับstruct order
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Bad request, unable to map payload"})
 		return
 	}
@@ -99,7 +98,7 @@ func DeleteOrder(c *gin.Context) { // ลบคำสั่งซื้อตา
 
 	// ลบข้อมูลในตาราง products_order ที่อ้างอิงถึงคำสั่งซื้อ
 	if err := tx.Exec("DELETE FROM products_orders WHERE order_id = ?", id).Error; err != nil {
-		tx.Rollback()
+		tx.Rollback() //ยกเลิกการเปลี่ยนแปลง
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete related products_order"})
 		return
 	}
@@ -111,7 +110,6 @@ func DeleteOrder(c *gin.Context) { // ลบคำสั่งซื้อตา
 		return
 	}
 
-	// ยืนยันการ transaction
 	tx.Commit()
 	c.JSON(http.StatusOK, gin.H{"message": "Deleted successful"})
 }
@@ -130,7 +128,7 @@ func GetOrdersByMemberID(c *gin.Context) { // เข้าถึงคำสั�
 		return
 	}
 
-	// ตรวจสอบว่า MemberID มีคำสั่งซื้อหรือไม่
+
 	if len(orders) == 0 {
 		c.JSON(http.StatusNotFound, gin.H{"message": "No orders found for this member"})
 		return
@@ -176,7 +174,6 @@ func GetOrdersByProductIDAndSellerID(c *gin.Context) { // เข้าถึง�
 
 	db := config.DB()
 
-	// ใช้ alias เพื่อลดความไม่ชัดเจนของคอลัมน์
 	result := db.Joins("JOIN products_orders ON products_orders.order_id = orders.id").
 		Joins("JOIN products ON products.id = products_orders.product_id").
 		Joins("JOIN orders AS o ON o.id = products_orders.order_id").

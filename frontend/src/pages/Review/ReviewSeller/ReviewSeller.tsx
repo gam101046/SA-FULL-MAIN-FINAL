@@ -32,7 +32,6 @@ const ReviewSell: React.FC = () => {
       }
     };
 
-
     const fetchSellerData = async () => {
       try {
         const sellerData = await GetSellerByMemberId(MemberID);
