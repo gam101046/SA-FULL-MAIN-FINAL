@@ -82,7 +82,7 @@ func main() {
 
 		//Message
 		router.POST("/message", controller.CreateMessage)
-		router.DELETE("/messages/:id",controller.DeleteMessage)
+		
 
 		//Review
 		router.POST("/review", controller.CreateReview)
